@@ -20,7 +20,7 @@ public class AutoNavigateWorker extends Worker {
     @Override
     public Result doWork() {
         // Perform the task here, for example, navigating to a screen
-        navigateToDesiredScreen();
+        //navigateToDesiredScreen();
         return Result.success();
     }
 
