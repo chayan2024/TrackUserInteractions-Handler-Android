@@ -1,9 +1,12 @@
 package com.example.trackuserinteractions_handler_workmanger_android;
 
+
 import android.os.Bundle;
         import android.os.Handler;
         import android.os.Looper;
         import android.view.MotionEvent;
+        import android.view.View;
+        import android.widget.Button;
         import android.widget.Toast;
         import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +16,7 @@ public class SDS extends AppCompatActivity {
     private Handler mHandler;
     private Runnable mRunnable;
     private long mTime = 2000;
+    private Button mButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +28,23 @@ public class SDS extends AppCompatActivity {
         mRunnable = new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(), "User inactive for " + (mTime / 1000) + " secs!", Toast.LENGTH_SHORT).show();
+                showToast("User inactive for " + (mTime / 1000) + " secs!");
             }
         };
 
         // Start the handler
         startHandler();
+
+        // Initialize the button
+        mButton = findViewById(R.id.btnClick);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Button clicked, reset the timer
+                resetHandler();
+                showToast("Button clicked!");
+            }
+        });
     }
 
     // When the screen is touched or motion is detected
@@ -54,5 +69,16 @@ public class SDS extends AppCompatActivity {
     // stop handler function
     private void stopHandler() {
         mHandler.removeCallbacks(mRunnable);
+    }
+
+    // reset handler function
+    private void resetHandler() {
+        stopHandler();
+        startHandler();
+    }
+
+    // showToast function to display a toast message
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
